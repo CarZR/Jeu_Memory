@@ -86,7 +86,7 @@ body{
 
 
 
-.paquet{
+#paquet{
     display : grid;
     grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
 
@@ -95,13 +95,21 @@ body{
     place-content: center;
 }
 
-.carte{
+.cartes{
     width: 100%;
-    aspect-ratio: 0.75;
-    background-color: black;
+    aspect-ratio: 0.9;
+    background-color: rgb(181, 106, 57);
     border-radius: 8px;
     place-content: center;
     text-align: center;
+}
+
+.image{
+    width: 90%;
+    height: 90%;
+    border-radius: 8px;
+    place-self: center;
+    background-size: cover;
 }
 
 button{

@@ -56,12 +56,7 @@
         <section id="paquet">
 
             <!--
-                <article class="carte" id="C1"><p class="valeur">1</p></article>
-                <article class="carte" id="C2"><p class="valeur">2</p></article>
-                <article class="carte" id="C3"><p class="valeur">3</p></article>
-                <article class="carte" id="C4"><p class="valeur">4</p></article>
-                <article class="carte" id="C5"><p class="valeur">5</p></article>
-                <article class="carte" id="C6"><p class="valeur">6</p></article>
+                <article class="carte" id="C1"><p class="valeur">6</p></article>
             -->
         </section>
     
@@ -69,17 +64,17 @@
     
             <article class="Comm1" id="NbCartesAff">
                 <h3>Nb de cartes</h3>
-                <p id="nb">20</p>
+                <p id="nb" value="0"></p>
             </article>
     
             <article class="Comm1" id="CoupsRestantsAff">
                 <h3>Coups restants</h3>
-                <p id="coups">50</p>
+                <p id="coups"></p>
             </article>
     
             <article class="Comm1" id="ScoreAff">
                 <h3>Score</h3>
-                <p id="pts" value="0">16/20</p>
+                <p id="pts" value="0"></p>
             </article>
     
             <button class="Comm1" id="New">Nouvelle partie</button>
@@ -114,7 +109,6 @@
         let paquet = [];                //paquet entier non mélangé
         let paquetM = [];               //le paquet mélangé
 
-        const carteAff = document.querySelectorAll(".carte")
         const paquetAff = document.querySelector('#paquet') //dans la fonction distribution()
 
         //const images = []for(let i=0; i<17; i=i+1){LienIMG+i+".jpg"}
@@ -137,55 +131,106 @@
 
         let enCours = false      //détermine si la partie est encore en cours ou finit
 
+        let card1 =[];
+        let card2 =[];
 
         /*check pour jouer*/
         BoutonJouer.addEventListener("click",gaming)  
 
-        let card1 =[]
-        let card2 =[]
 
         function gaming(){
             if (!verifier()){                   /*avec les () parce qu'elle retourne un booléen (true ou false)*/
-            }
+                let enCours = false    
+        }
             if (verifier()){
-                initialisation();
-                console.log("finit")
-                enCours = true
+                let enCours = true    
+                const carteAff = initialisation();
 
                 carteAff.forEach(function (i){
-                    i.addEventListener("click", ()=>{
-                        document.querySelector(i.id).classList.remove("hide")
-                    })
+                    i.addEventListener("click", ()=>{retourner(i)})   
                 })
 
-                /*
-                for (i=0; i<paquetM.length; i=i+1){
-                    let s = "#C"+i
-                    document.querySelector(s).addEventListener("click", ()=>{
-                        let y = "#C"+i+">p";
-                        document.querySelector(y).classList.remove(hide);
-                        /*
-                        if (card1==[]){
-                            card1.push(paquetM[i]);
-                            let y = "#C"+i+">p";
-                            document.querySelector(y).classList.add(hide)}
-                        else{
-                            if(card2==[]){card2.push(paquetM[i])}
-                        }
-                        
-                    })
-                }
-                
-                document.querySelector.addEventListener("click", () => {
-                    card1.push(paquetM[carteAff.id[1]])
-                    console.log(card1)
-                    //document.querySelector("#carteAff.id[1]")
-                */
-                
-                
             }
 
         }
+
+        function retourner(carte){
+            document.querySelector("#"+carte.id+">p").classList.remove("hide")
+            console.log(carte.classList.contains("true"))
+            if (carte.classList.contains("true")){
+                if (card1.length==0){
+                    card1.push(paquetM[parseInt(carte.id.substr(1))]);
+                    card1.push(carte.id.substr(1));
+                    carte.classList.remove("true")
+
+                    coups.textContent = parseInt(coups.textContent)-1 
+                }else{
+                    if (card2.length==0){
+                        card2.push(paquetM[parseInt(carte.id.substr(1))]);
+                        card2.push(carte.id.substr(1));
+                        carte.classList.remove("true")
+
+                        coups.textContent = parseInt(coups.textContent)-1 
+                        
+                        comparer(card1, card2)
+
+                    }
+                }
+            }
+        }
+
+        function comparer(carte1, carte2){                  //carte1 et carte2 sont composés comme ça [[lien image, n° du double donc 1 ou 2], index dans le paquet utilisé]
+            if (carte1[0][0] == carte2[0][0]){
+                let listeB =[];
+                listeB.push(carte1[1]);
+                listeB.push(carte2[1]);
+                setTimeout(()=>{clignotte(listeB, 4, ["green", "rgb(181, 106, 57)"])},250)
+                card1.splice(0,card1.length)
+                card2.splice(0,card2.length)
+                nb.value = parseInt(nb.value)+2
+                score.value = parseInt(nb.value) + 150
+
+            }
+
+            else{
+                document.querySelectorAll(".cartes")[parseInt(carte1[1])].classList.add("true")
+                document.querySelectorAll(".cartes")[parseInt(carte2[1])].classList.add("true")
+
+
+
+                let listeA =[];
+                listeA.push(carte1[1]);
+                listeA.push(carte2[1]);
+                setTimeout(()=>{clignotte(listeA, 0, ["red", "rgb(181, 106, 57)"])},250);
+
+                let i1 = carte1[1];
+                let i2 = carte2[1];
+
+                setTimeout(()=>{
+                    document.querySelector("#C"+i1+">p").classList.add("hide");
+                    document.querySelector("#C"+i2+">p").classList.add("hide");
+                }, 2000);
+
+                card1.splice(0,card1.length);
+                card2.splice(0,card2.length);
+
+            }
+        }
+
+
+        function clignotte(element, i, color){                        
+            if (i<8){
+                let c=color[0];
+                element.forEach((i)=> {document.querySelector("#C"+i).style.backgroundColor=c});
+                i=i+1;
+                color = color.reverse();
+                setTimeout(()=>{clignotte(element, i, color)},250)
+            }else{return}
+        }
+
+
+
+
 
         function initialisation(){
 
@@ -216,13 +261,16 @@
             //console.log("2 "+paquetM.length+" LOL "+paquet.length);
             //console.log("AHAH")
             paquetM.forEach((i) => distribution(i))
+            const carteAff = document.querySelectorAll(".cartes")
+            return(carteAff)
+
             //console.log("essaie encore")
         }
 
         function distribution(carte){
             console.log("Tape ton seum")
             paquetAff.insertAdjacentHTML("beforeend",`
-                <article class="cartes" id="C${paquetM.findIndex((a) => a==carte)}"><p class="image hide"></p></article>
+                <article class="cartes true" id="C${paquetM.findIndex((a) => a==carte)}" ><p class="image hide"></p></article>
                 <style>
                     #C${paquetM.findIndex((a)=> a==carte)}>p{background-image: url("${carte[0]}");}
                 </style>
@@ -230,9 +278,6 @@
         }
 
 
-        function comparer(){
-            //
-        }
 
 
 
