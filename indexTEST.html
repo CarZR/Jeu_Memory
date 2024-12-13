@@ -64,7 +64,7 @@
     
             <article class="Comm1" id="NbCartesAff">
                 <h3>Nb de cartes</h3>
-                <p id="nb" value="0"></p>
+                <p id="nb"></p>
             </article>
     
             <article class="Comm1" id="CoupsRestantsAff">
@@ -74,7 +74,7 @@
     
             <article class="Comm1" id="ScoreAff">
                 <h3>Score</h3>
-                <p id="pts" value="0"></p>
+                <p id="pts" value="v0"></p>
             </article>
     
             <button class="Comm1" id="New">Nouvelle partie</button>
@@ -99,8 +99,7 @@
         const score = document.querySelector("#pts")
 
         let cartesFinit = []
-
-        console.log(cartes)
+        let NbCartesJouee = 0
 
         /*IMAGES*/
         const LienIMG = "http://127.0.0.1:5500/Images/"
@@ -108,6 +107,9 @@
         let demiPaquet = [];        //que la moitié du paquet, sans doubles
         let paquet = [];                //paquet entier non mélangé
         let paquetM = [];               //le paquet mélangé
+
+        let nbCartesActu = 0;
+        let scoreActu = 0;
 
         const paquetAff = document.querySelector('#paquet') //dans la fonction distribution()
 
@@ -127,55 +129,70 @@
             paquetAff.innerHTML =''
         }
 
-        console.log(LienIMG+1+".jpg")
-
-        let enCours = false      //détermine si la partie est encore en cours ou finit
-
         let card1 =[];
         let card2 =[];
 
         /*check pour jouer*/
         BoutonJouer.addEventListener("click",gaming)  
 
+        let onPlay = true
 
         function gaming(){
             if (!verifier()){                   /*avec les () parce qu'elle retourne un booléen (true ou false)*/
-                let enCours = false    
         }
             if (verifier()){
-                let enCours = true    
-                const carteAff = initialisation();
 
-                carteAff.forEach(function (i){
-                    i.addEventListener("click", ()=>{retourner(i)})   
-                })
+                if ((nbCartesActu==SelecNbC.value) && parseInt(coups.textContent)>0){
+                    console.log("gagné !!!")
+                }
 
+                if (parseInt(coups.textContent)<1){
+                    console.log("PERDU !!!")
+                    onPlay = false
+                }
+
+                if (onPlay){
+                    const carteAff = initialisation();
+
+                    carteAff.forEach(function (i){
+                        i.addEventListener("click", ()=>{retourner(i)})   
+                    })
+                }
             }
-
         }
 
         function retourner(carte){
-            document.querySelector("#"+carte.id+">p").classList.remove("hide")
-            console.log(carte.classList.contains("true"))
+            document.querySelector("#"+carte.id+">p").classList.remove("hide");
             if (carte.classList.contains("true")){
                 if (card1.length==0){
                     card1.push(paquetM[parseInt(carte.id.substr(1))]);
                     card1.push(carte.id.substr(1));
-                    carte.classList.remove("true")
+                    carte.classList.remove("true");
 
                     coups.textContent = parseInt(coups.textContent)-1 
                 }else{
                     if (card2.length==0){
                         card2.push(paquetM[parseInt(carte.id.substr(1))]);
                         card2.push(carte.id.substr(1));
-                        carte.classList.remove("true")
+                        carte.classList.remove("true");
 
                         coups.textContent = parseInt(coups.textContent)-1 
                         
                         comparer(card1, card2)
 
+                        cartes.textContent = nbCartesActu +" / "+SelecNbC.value;
+                        let a= score.textContent
+                    
+                        setTimeout(()=>{actualiserScore(), 500})
                     }
                 }
+            }
+        }
+
+        function actualiserScore(){
+            if (score.textContent<scoreActu){
+                score.textContent = parseInt(score.textContent) + 1;
+                setTimeout(()=>{actualiserScore(), 500});
             }
         }
 
@@ -187,8 +204,10 @@
                 setTimeout(()=>{clignotte(listeB, 4, ["green", "rgb(181, 106, 57)"])},250)
                 card1.splice(0,card1.length)
                 card2.splice(0,card2.length)
-                nb.value = parseInt(nb.value)+2
-                score.value = parseInt(nb.value) + 150
+                
+                nbCartesActu = nbCartesActu+2
+                //nb.value = parseInt(nb.value)+2
+                scoreActu = scoreActu + 150
 
             }
 
@@ -250,25 +269,19 @@
                 paquet.push([demiPaquet[i], 2]);          //permet d'avoir des doublies différenciables
             }
 
-            //console.log(paquet)
 
             for (i=0; i<index.length*2; i=i+1){
                 let a= (Math.floor(Math.random() * 100))% (index.length*2-i);
                 paquetM.push(paquet[a]);     
                 paquet.splice(a,1)           
             }
-            //console.log(paquetM)
-            //console.log("2 "+paquetM.length+" LOL "+paquet.length);
-            //console.log("AHAH")
+
             paquetM.forEach((i) => distribution(i))
             const carteAff = document.querySelectorAll(".cartes")
             return(carteAff)
-
-            //console.log("essaie encore")
         }
 
         function distribution(carte){
-            console.log("Tape ton seum")
             paquetAff.insertAdjacentHTML("beforeend",`
                 <article class="cartes true" id="C${paquetM.findIndex((a) => a==carte)}" ><p class="image hide"></p></article>
                 <style>
@@ -421,7 +434,7 @@
         niv3.addEventListener("change", () => {SelectNiv.id = "3"})
         niv4.addEventListener("change", () => {SelectNiv.id = "4"})
 
-    
+
     </script>
 
 </body>
