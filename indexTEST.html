@@ -142,51 +142,106 @@
         }
             if (verifier()){
 
-                if ((nbCartesActu==SelecNbC.value) && parseInt(coups.textContent)>0){
-                    console.log("gagné !!!")
-                }
+                const carteAff = initialisation();
 
-                if (parseInt(coups.textContent)<1){
-                    console.log("PERDU !!!")
+                carteAff.forEach(function (i){
+                    console.log("TEST - conditions")
+                    i.addEventListener("click", ()=>{retourner(i)})   
+                })
+            }
+        }
+
+
+        function retourner(carte){
+
+            if (!onPlay){
+                console.log("non, perdu")
+            }
+
+            if (onPlay){
+
+                document.querySelector("#"+carte.id+">p").classList.remove("hide");
+                if (carte.classList.contains("true")){
+                    if (card1.length==0){
+                        card1.push(paquetM[parseInt(carte.id.substr(1))]);  //un ID ne pouvant pas n'être qu'un NB, il y a "C" avant, donc on le retire pour obtenir l'id (ca marchait pas sans le C) 
+                        card1.push(carte.id.substr(1));
+
+                        console.log(card1);
+                        console.log(paquetM[1])
+                        console.log(carte.id)
+                        console.log("2EME LOG "+paquetM[parseInt(carte.id.substr(1))]);
+
+                        carte.classList.remove("true");
+
+                        coups.textContent = parseInt(coups.textContent)-1 
+                    }else{
+                        if (card2.length==0){
+                            card2.push(paquetM[parseInt(carte.id.substr(1))]);
+                            card2.push(carte.id.substr(1));
+
+                            console.log(card2);
+                            console.log("2EME LOG "+paquetM[parseInt(carte.id)]);
+
+                            carte.classList.remove("true");
+
+                            coups.textContent = parseInt(coups.textContent)-1 
+                            
+                            comparer(card1, card2)
+
+                            cartes.textContent = nbCartesActu +" / "+SelecNbC.value;
+                            let a= score.textContent
+                        
+                            setTimeout(()=>{actualiserScore(), 500})
+                        }
+                    }
+                }
+                if (parseInt(coups.textContent)==0){
                     onPlay = false
                 }
-
-                if (onPlay){
-                    const carteAff = initialisation();
-
-                    carteAff.forEach(function (i){
-                        i.addEventListener("click", ()=>{retourner(i)})   
-                    })
+                if ((nbCartesActu==SelecNbC.value) && parseInt(coups.textContent)>0){
+                    console.log("gagné !!!")
+                    setTimeout(()=>{gagne(), 1000})
+                }
+                if (parseInt(coups.textContent)<1){
+                    let paquetIndex = []
+                    for (i=0; i<paquetM.length;i=i+1){paquetIndex.push(i)}
+                    setTimeout(()=>{paquetIndex.forEach((i)=>{
+                        document.querySelector("#C"+i).style.backgroundColor="red";
+                        document.querySelector("#C"+i+">p").classList.remove("hide")
+                        })},2500);
+                    setTimeout(()=>{perdu(), 1000})
                 }
             }
         }
 
-        function retourner(carte){
-            document.querySelector("#"+carte.id+">p").classList.remove("hide");
-            if (carte.classList.contains("true")){
-                if (card1.length==0){
-                    card1.push(paquetM[parseInt(carte.id.substr(1))]);
-                    card1.push(carte.id.substr(1));
-                    carte.classList.remove("true");
 
-                    coups.textContent = parseInt(coups.textContent)-1 
-                }else{
-                    if (card2.length==0){
-                        card2.push(paquetM[parseInt(carte.id.substr(1))]);
-                        card2.push(carte.id.substr(1));
-                        carte.classList.remove("true");
+        //remplacer paquetM par une liste qui va de 0 à indicemax
+        function gagne(){
+            let paquetIndex = []
+            for (i=0; i<paquetM.length;i=i+1){paquetIndex.push(i);console.log(i+paquetIndex)}
+            setTimeout(()=>{clignotte(paquetIndex, 0, ["green", "rgb(181, 106, 57)"])},250);
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+        }
 
-                        coups.textContent = parseInt(coups.textContent)-1 
-                        
-                        comparer(card1, card2)
+        function perdu(){
 
-                        cartes.textContent = nbCartesActu +" / "+SelecNbC.value;
-                        let a= score.textContent
-                    
-                        setTimeout(()=>{actualiserScore(), 500})
-                    }
-                }
-            }
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
         }
 
         function actualiserScore(){
