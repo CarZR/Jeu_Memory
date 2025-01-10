@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memorie</title>
-    <link rel="stylesheet" href="style.css">
+    <!--<link rel="stylesheet" href="style.css">-->
 </head>
 
 
@@ -21,13 +21,34 @@ body{
     position : fixed;
     top: 0;
 
-    align-content: center;
-
     margin:0rem;
     padding:0rem;
     width: 100%;
     height: 100%;
     background-color: rgb(0, 0, 0,0.8);
+
+    
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 14% 72% 14% 14% 72% 14%;
+    grid-template-areas: ". . ." ". menu1 ." ". . ."". . ." ". menu2 ." ". . .";
+}
+
+.first-menu{grid-area: menu1;}
+.second-menu{grid-area: menu2;}
+
+.menu{
+    margin:0;
+    padding : 1rem;
+
+    display : flex;
+    flex-direction: column;
+    gap : 1rem;
+
+    background-color: rgb(181, 106, 57);
+    border-radius: 8px;
+
+    place-items: center;
 }
 
 .best-score{
@@ -75,23 +96,6 @@ body{
     align-items: center;
 }
 
-.menu{
-    margin:0;
-    padding : 1rem;
-
-    display : flex;
-    flex-direction: column;
-    gap : 1rem;
-
-    background-color: rgb(181, 106, 57);
-    border-radius: 8px;
-    width: 80vw;
-    height: 80vh;
-    
-    justify-self: center;
-    justify-content: center;
-    place-items: center;
-}
 
 #paquet{
     display : grid;
@@ -177,7 +181,7 @@ p{margin:0rem}
 <body>
     
     <div class="overlay-menu">
-        <section class="menu">
+        <section class="menu menu-items first-menu">    <!-- il y avait aussi une classe menu, pour le css-->
 
             <article class="hide" id="end-game-message">
                 <p id="end-game-title"></p>
@@ -221,20 +225,39 @@ p{margin:0rem}
         
             <button class="play" id="0">Jouer !</button>
 
+            <button class="button-history">Historique</button>
+
             <a href="index.html">VO</a>
             <a href="http://127.0.0.1:5500/ImagesTEST">images</a>
         </section>
+
+        
+        <section class="menu history second-menu">
+            <h2>Historique des parties</h2>
+
+            <div>
+
+            </div>
+
+            <button class="button-menu">Retour</button>
+        </section>
+        
+
     </div>
 
     <div class="corps">
         <section id="paquet">
-
             <!--
                 <article class="carte" id="C1"><p class="valeur">6</p></article>
             -->
         </section>
     
         <section class="commandes">
+
+            <article>
+                <h3>Temps restant</h3>
+                <p id="timer">0</p>
+            </article>
     
             <article class="Comm1" id="NbCartesAff">
                 <h3>Nb de cartes</h3>
@@ -255,8 +278,6 @@ p{margin:0rem}
             
         </section>
     </div>
-
-
 
 
     <script>
@@ -290,6 +311,49 @@ p{margin:0rem}
         let endMessage="";
         //let Won = false; ???
         let bestScore = 0;
+        let timer;
+
+        const screenHistory = document.querySelector(".history>div")
+        document.querySelector(".button-history").addEventListener("click",showHistory)
+        document.querySelector(".button-menu").addEventListener("click",hideHistory)
+
+
+        function showHistory(){
+            console.log("ici l'historique")
+            console.log(historyGames)
+            document.querySelector(".menu-items").classList.add("second-menu");
+            document.querySelector(".menu-items").classList.remove("first-menu");
+
+            document.querySelector(".history").classList.add("first-menu");
+            document.querySelector(".history").classList.remove("second-menu");
+
+            historyGames.forEach((i)=>{
+                console.log('i = ')
+                console.log(i)
+                console.log("i[0]")
+                console.log(i[0])
+                screenHistory.insertAdjacentHTML("beforeend",`
+                    <article class="history-parties">
+                        <p>${i[0]}</p>
+                        <p>${i[1]}</p>
+                        <p>${i[2]}</p>
+                        <p>${i[3]}</p>
+                    </article>
+                `)
+            })
+
+            console.log(screenHistory)
+        }
+
+        function hideHistory(){
+            document.querySelector(".menu-items").classList.remove("second-menu");
+            document.querySelector(".menu-items").classList.add("first-menu");
+
+            document.querySelector(".history").classList.remove("first-menu");
+            document.querySelector(".history").classList.add("second-menu");
+
+            screenHistory.innerHTML=''
+        }
 
         //const images = []for(let i=0; i<17; i=i+1){linkPictures+i+".jpg"}
 
@@ -309,6 +373,8 @@ p{margin:0rem}
         let card1 =[];
         let card2 =[];
 
+        const screenTime = document.querySelector("#timer")
+
         /*check pour jouer*/
         BoutonJouer.addEventListener("click",gaming)  
 
@@ -326,7 +392,27 @@ p{margin:0rem}
                     console.log("TEST - conditions")
                     i.addEventListener("click", ()=>{retourner(i)}) //chaque carte est sensible à l'évènement "click", lui faisant executer "retourner()"
                 })
+
+                theTime()
+
             }
+        }
+
+        function theTime(){
+            timer = window.setInterval(() => {
+    
+                remainingTime = remainingTime - 1;  //décompte (en secondes)
+                
+                let seconds = remainingTime%60
+                if (seconds<10){seconds = "0"+seconds}  //permet d'avoir un format 1:03 au lieu de 1:3 quand il reste 1 minute et 3 secondes
+
+                screenTime.textContent = (Math.round(remainingTime/60)+":"+ seconds);
+
+                if (remainingTime <1  ){
+                    clearInterval(timer);
+                    perdu()}
+
+            }, 1000)
         }
 
         let cartesRetournees = []
@@ -345,7 +431,10 @@ p{margin:0rem}
                     cartesRetournees.push([shuffledPack[parseInt(carte.id.substr(1))], (carte.id.substr(1))])    //on push la carte (url + num (1 ou 2)) et son id, sous forme de liste
                     carte.classList.remove("inconnue");     //la carte est retournée, elle est connue.
                     screenRemainingShots.textContent = parseInt(screenRemainingShots.textContent)-1   //actualisation de l'affichage du nb de coups
-                
+
+                    remainingShots = remainingShots -1;
+                    screenRemainingShots.textContent = remainingShots;
+
                     if (cartesRetournees.length==2){        //si 2 cartes retournées
 
                         comparer(cartesRetournees)
@@ -394,7 +483,11 @@ p{margin:0rem}
             }
 
             //historyGames = liste de parties. une partie = nom, score, nb de coups joués, sa durée
-            historyGames.push([inputName.value, score, ])
+            let seconds = allTime-remainingTime%60
+            if (seconds<10){seconds="0"+seconds}
+            let duree = Math.round((allTime-remainingTime)/60) +":"+seconds
+
+            historyGames.push([inputName.value, score, duree])
 
             randomIndex.splice(0,randomIndex.length)
             halfPack.splice(0,halfPack.length)        //que la moitié du paquet, sans doubles
@@ -419,31 +512,21 @@ p{margin:0rem}
         let remainingShots = 0;
 
         function computeVariables(){  //choix des valeurs en début de partie
-            /*
-            screenNbFlipCards.textContent = "0 / "+selectionNumberCards.value
-                    
-            if (parseInt(selectionLevel.id)==1){
-                screenRemainingShots.textContent = parseInt(selectionNumberCards.value)*4;
-            }
-            if (parseInt(selectionLevel.id)==2){
-                screenRemainingShots.textContent = parseInt(selectionNumberCards.value)*3;
-            }
-            if (parseInt(selectionLevel.id)==3){
-                screenRemainingShots.textContent = parseInt(selectionNumberCards.value)*2;
-            }
-            if (parseInt(selectionLevel.id)==4){
-                screenRemainingShots.textContent = parseInt(selectionNumberCards.value);
-            }
-            screenScore.textContent = 0;
-            */
 
-            allShots = parseInt(selectionNumberCards.value) *(4/parseInt(selectionLevel.id))
-            screenRemainingShots.textContent = allShots
+            allShots = parseInt(selectionNumberCards.value) *(4/parseInt(selectionLevel.id));
+            screenRemainingShots.textContent = allShots;
+            remainingShots = allShots;
+
+            allTime = Math.round(parseInt(selectionNumberCards.value)*5  *(1.5/parseInt(selectionLevel.id)));
+            remainingTime = allTime;
 
         }
 
         //remplacer shuffledPack par une liste qui va de 0 à indicemax
         function gagne(){
+
+            clearInterval(timer)
+
             let paquetIndex = [];
             for (i=0; i<shuffledPack.length;i=i+1){paquetIndex.push(i)}; //liste  de valeurs allant de 0 au nb de cartes utilisées
             
@@ -465,10 +548,12 @@ p{margin:0rem}
             setTimeout(()=>{paquetIndex.forEach((i)=>{
                 document.querySelector("#C"+i).style.backgroundColor="red";
                 document.querySelector("#C"+i+">p").classList.remove("hide")
-                })},2500);
+                })},0);
 
             endTitle="Dommage :/"
             endMessage="Tu as perdu cette partie... Essaie encore !"
+
+            score = 0
 
             setTimeout(initialisationJeu, 3000)
 
@@ -494,8 +579,6 @@ p{margin:0rem}
                 cartesRetournees.splice(0,cartesRetournees.length) //fin de comparaison => il n'y a plus de cartes comparées
                 nbFlipCards = nbFlipCards+2   //ajout de 2 au nb de cartes trouvées
                 score = score + 150     //ajout de points au score
-            
-
             }
 
             else{
@@ -645,6 +728,8 @@ p{margin:0rem}
         /*vérifier si les infos sont valides*/
 
         function verifier(){
+            console.log(inputName.value)
+            console.log(inputName.value.length)
             if (inputName.value.length<1 || inputName.value.length>10){                       //Si le nom d'utilisateurn'est pas conforme
                 if (selectionLevel.id == "0"){                                                                //et que le niveau n'a pas été coché       = ensemble non conforme
                     document.querySelectorAll(".invalid")[0].classList.remove("hide");
