@@ -26,20 +26,15 @@ body{
     width: 100%;
     height: 100%;
     background-color: rgb(0, 0, 0,0.8);
-
-    
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
-    grid-template-rows: 14% 72% 14% 14% 72% 14%;
-    grid-template-areas: ". . ." ". menu1 ." ". . ."". . ." ". menu2 ." ". . .";
 }
 
-.first-menu{grid-area: menu1;}
-.second-menu{grid-area: menu2;}
 
 .menu{
-    margin:0;
+    margin : 10%;
     padding : 1rem;
+
+    width: 80%;
+    height: 70%;
 
     display : flex;
     flex-direction: column;
@@ -49,6 +44,21 @@ body{
     border-radius: 8px;
 
     place-items: center;
+}
+
+.menu-items{width: 100%; height: 100%; margin:0; padding:0}
+.history{width: 100%; height: 100%; margin:0; padding:0}
+
+
+.list-history{
+    display : flex;
+    flex-direction: column;
+}
+
+.history-parties{
+    display : grid;
+    grid-template-columns: 10vh 10vh 10vh 10vh ;
+
 }
 
 .best-score{
@@ -98,8 +108,11 @@ body{
 
 
 #paquet{
+    width: 100%;
+    height: 100%;
     display : grid;
-    grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
+
+    grid-template-columns: repeat(auto-fill, minmax(15vmin, 1fr));
 
     grid-auto-flow:dense; 
     gap : 1rem;
@@ -111,15 +124,16 @@ body{
     aspect-ratio: 0.9;
     background-color: rgb(181, 106, 57);
     border-radius: 8px;
+    display : flex;
     place-content: center;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .image{
     width: 90%;
     height: 90%;
     border-radius: 8px;
-    place-self: center;
+    /*place-self: center;*/
     background-size: cover;
 }
 
@@ -147,19 +161,35 @@ p{margin:0rem}
 @media only screen and (max-width: 34rem){
     .corps{
         margin : 1rem;
+        margin-top: 5rem;
         display : grid;
         grid-template-rows: auto auto;
         gap : 1rem;
         grid-template-areas: "commandes" "jeu";
+
     }
     .commandes{
         grid-area: commandes;
         display : flex;
+        flex-wrap: wrap;
         flex-direction: row;
+        position :fixed;
+        top : 0;
+        background-color: white;
+        padding : .5rem;
+        width: 95%;
+        height: 4rem;
+        place-content: center;
+
     }
+
+    .h3-on-play{font-size: small;}
+    .commande{display: flex; flex-direction: row; gap:.2rem}
+
     .paquet{
         grid-area: jeu;
     }
+
 }
 
 @media only screen and (min-width: 34.001rem){
@@ -167,12 +197,25 @@ p{margin:0rem}
         margin : 1rem;
 
         display : grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 4fr 1fr;
         gap : 1rem;
+    }
+    .commandes{
+        display :flex;
+        flex-direction: column;
+        position:fixed;
+        top : 10%;
+        right: 0;
+        padding : .5rem;
+        width: 20%;
+        
+
     }
     .commande{
         display : flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: center;
+        gap : .5rem
     }
 }
 </style>
@@ -180,110 +223,122 @@ p{margin:0rem}
 
 <body>
     
-    <div class="overlay-menu">
-        <section class="menu menu-items first-menu">    <!-- il y avait aussi une classe menu, pour le css-->
-
-            <article class="hide" id="end-game-message">
-                <p id="end-game-title"></p>
-                <p id="end-game-paragraph"></p>
-            </article>
-            
-            <article id="best-score">
-                <h2>Meilleur score</h2>
-                <p>0</p>
-            </article>
-
-            <h1>Nouvelle partie</h1>
-
-            <article class="user">
-                <h3>Nom d'utilisateur</h3>
-                <input name="name" class="default" type="text" value="Utilisateur1"/>
-                <p class="invalid hide">Le nom d'utilisateur doit contenir entre 1 et 10 caractères.</p>
-            </article>
-
-            <article class="aa">
-                <h3>Nombre de cartes</h3>
-                <select name="Nb" id="selection-number-cards">
-                    <option class="choice-number-card" value="6">6 cartes</option>
-                    <option class="choice-number-card" value="10">10 cartes</option>
-                    <option class="choice-number-card" value="16">16 cartes</option>
-                    <option class="choice-number-card" value="20">20 cartes</option>
-                    <option class="choice-number-card" value="32">32 cartes</option>
-                </select>
-            </article>
-        
-            <article class="choice-level-article">
-                <h3>Niveau : </h3>
-                <div class="selection-level" id="0">
-                    <input type="radio" name="level" class="levels" value="Niv1"> Facile<br>
-                    <input type="radio" name="level" class="levels" value="Niv2"> Moyen<br>
-                    <input type="radio" name="level" class="levels" value="Niv3"> Difficile<br>
-                    <input type="radio" name="level" class="levels" value="Niv4"> IMPOSSIBLE<br>
-                </div>
-                <p class="invalid hide">Choisissez un niveau</p>
-            </article>
-        
-            <button class="play" id="0">Jouer !</button>
-
-            <button class="button-history">Historique</button>
-
-            <a href="index.html">VO</a>
-            <a href="http://127.0.0.1:5500/ImagesTEST">images</a>
-        </section>
-
-        
-        <section class="menu history second-menu">
-            <h2>Historique des parties</h2>
-
-            <div>
-
-            </div>
-
-            <button class="button-menu">Retour</button>
-        </section>
-        
-
-    </div>
-
     <div class="corps">
-        <section id="paquet">
-            <!--
-                <article class="carte" id="C1"><p class="valeur">6</p></article>
-            -->
-        </section>
     
         <section class="commandes">
 
-            <article>
-                <h3>Temps restant</h3>
+            <article class="commande">
+                <h3 class="h3-on-play">Temps</h3>
                 <p id="timer">0</p>
             </article>
     
-            <article class="Comm1" id="NbCartesAff">
-                <h3>Nb de cartes</h3>
-                <p id="nb"></p>
+            <article class="commande" id="NbCartesAff">
+                <h3 class="h3-on-play">Cartes</h3>
+                <p id="nb"></p>                 
             </article>
     
-            <article class="Comm1" id="CoupsRestantsAff">
-                <h3>Coups restants</h3>
-                <p id="shots"></p>
+            <article class="commande" id="CoupsRestantsAff">
+                <h3 class="h3-on-play">Coups</h3>
+                <p id="shots"></p>            
             </article>
     
-            <article class="Comm1" id="ScoreAff">
-                <h3>Score</h3>
-                <p id="pts">0</p>
+            <article class="commande" id="ScoreAff">
+                <h3 class="h3-on-play">Score</h3>
+                <p id="pts">0</p>       
             </article>
     
             <button class="Comm1" id="New">Nouvelle partie</button>
             
         </section>
+
+        <section id="paquet">
+            <!--
+                <article class="carte" id="C1"><p class="valeur">6</p></article>
+            -->
+        </section>
     </div>
+
+    
+
+    <div class="overlay-menu">
+
+        <div class="menu-items">
+
+            <section class="menu">    <!--il y avait aussi une classe menu, pour le css!!-->
+
+                
+                <article class="hide" id="end-game-message">
+                    <p id="end-game-title"></p>
+                    <p id="end-game-paragraph"></p>
+                </article>
+                
+                <article id="best-score">
+                    <h2>Meilleur score</h2>
+                    <p>0</p>
+                </article>
+
+                <h1>Nouvelle partie</h1>
+
+                <article class="user">
+                    <h3>Nom d'utilisateur</h3>
+                    <input name="name" class="default" type="text" value="Utilisateur1"/>
+                    <p class="invalid hide">Le nom d'utilisateur doit contenir entre 1 et 10 caractères.</p>
+                </article>
+
+                <article class="aa">
+                    <h3>Nombre de cartes</h3>
+                    <select name="Nb" id="selection-number-cards">
+                        <option class="choice-number-card" value="6">6 cartes</option>
+                        <option class="choice-number-card" value="10">10 cartes</option>
+                        <option class="choice-number-card" value="16">16 cartes</option>
+                        <option class="choice-number-card" value="20">20 cartes</option>
+                        <option class="choice-number-card" value="32">32 cartes</option>
+                    </select>
+                </article>
+            
+                <article class="choice-level-article">
+                    <h3>Niveau : </h3>
+                    <div class="selection-level" id="0">
+                        <input type="radio" name="level" class="levels" value="Niv1"> Facile<br>
+                        <input type="radio" name="level" class="levels" value="Niv2"> Moyen<br>
+                        <input type="radio" name="level" class="levels" value="Niv3"> Difficile<br>
+                        <input type="radio" name="level" class="levels" value="Niv4"> IMPOSSIBLE<br>
+                    </div>
+                    <p class="invalid hide">Choisissez un niveau</p>
+                </article>
+            
+                <button class="play" id="0">Jouer !</button>
+
+                <button class="button-history">Historique</button>
+
+                <a href="index.html">VO</a>
+                <a href="http://127.0.0.1:5500/ImagesTEST">images</a>
+            
+            </section>
+        </div>
+        
+        <div class="history hide">
+            <section class="menu">
+            
+                <h2>Historique des parties</h2>
+
+                <div class="list-history">
+
+                </div>
+
+                <button class="button-menu">Retour</button>
+            
+            </section>
+        </div>
+
+    </div>
+    
 
 
     <script>
 
         //nom, score, nb de coups joués, sa durée
-        let historyGames = [["Joueur", "Score", "Coups", "Temps"]]
+        let historyGames = [["Joueur", "Score", "Coups", "Temps"],["-------------------","-------------------","-------------------","-------------------"]]
 
         /*BOUTONS DU MENU*/
         const BoutonJouer = document.querySelector(".play")
@@ -313,7 +368,7 @@ p{margin:0rem}
         let bestScore = 0;
         let timer;
 
-        const screenHistory = document.querySelector(".history>div")
+        const screenHistory = document.querySelector(".list-history")
         document.querySelector(".button-history").addEventListener("click",showHistory)
         document.querySelector(".button-menu").addEventListener("click",hideHistory)
 
@@ -321,11 +376,9 @@ p{margin:0rem}
         function showHistory(){
             console.log("ici l'historique")
             console.log(historyGames)
-            document.querySelector(".menu-items").classList.add("second-menu");
-            document.querySelector(".menu-items").classList.remove("first-menu");
+            document.querySelector(".menu-items").classList.add("hide");
 
-            document.querySelector(".history").classList.add("first-menu");
-            document.querySelector(".history").classList.remove("second-menu");
+            document.querySelector(".history").classList.remove("hide");
 
             historyGames.forEach((i)=>{
                 console.log('i = ')
@@ -346,11 +399,8 @@ p{margin:0rem}
         }
 
         function hideHistory(){
-            document.querySelector(".menu-items").classList.remove("second-menu");
-            document.querySelector(".menu-items").classList.add("first-menu");
-
-            document.querySelector(".history").classList.remove("first-menu");
-            document.querySelector(".history").classList.add("second-menu");
+            document.querySelector(".menu-items").classList.remove("hide");
+            document.querySelector(".history").classList.add("hide");
 
             screenHistory.innerHTML=''
         }
@@ -406,7 +456,7 @@ p{margin:0rem}
                 let seconds = remainingTime%60
                 if (seconds<10){seconds = "0"+seconds}  //permet d'avoir un format 1:03 au lieu de 1:3 quand il reste 1 minute et 3 secondes
 
-                screenTime.textContent = (Math.round(remainingTime/60)+":"+ seconds);
+                screenTime.textContent = (Math.trunc(remainingTime/60)+":"+ seconds);
 
                 if (remainingTime <1  ){
                     clearInterval(timer);
@@ -485,9 +535,9 @@ p{margin:0rem}
             //historyGames = liste de parties. une partie = nom, score, nb de coups joués, sa durée
             let seconds = allTime-remainingTime%60
             if (seconds<10){seconds="0"+seconds}
-            let duree = Math.round((allTime-remainingTime)/60) +":"+seconds
+            let duree = Math.trunc((allTime-remainingTime)/60) +":"+seconds
 
-            historyGames.push([inputName.value, score, duree])
+            historyGames.push([inputName.value, score, allShots-remainingShots, duree])
 
             randomIndex.splice(0,randomIndex.length)
             halfPack.splice(0,halfPack.length)        //que la moitié du paquet, sans doubles
@@ -497,7 +547,8 @@ p{margin:0rem}
             nbFlipCards = 0;
             score = 0;
 
-            inputName.value="Utilisateur1"
+            newUserName = true;
+            RetourDefaultNom()
 
             endTitle="";
             endMessage="";
@@ -524,6 +575,7 @@ p{margin:0rem}
 
         //remplacer shuffledPack par une liste qui va de 0 à indicemax
         function gagne(){
+            console.log("gagné !")
 
             clearInterval(timer)
 
@@ -542,6 +594,8 @@ p{margin:0rem}
         }
 
         function perdu(){
+            console.log("perdu !")
+
             let paquetIndex = []
             for (i=0; i<shuffledPack.length;i=i+1){paquetIndex.push(i)} //liste  de valeurs allant de 0 au nb de cartes utilisées
             
@@ -779,6 +833,7 @@ p{margin:0rem}
             }
         }
 
+        let newUserName= false
 
         /*POUR L'EFFET SUR LE INPUT*/    /*WARNING : ce code est INTÉGRALEMENT DE MOI, mais je l'ai repris d'un autre de mes projets (le site Bento)*/
         document.querySelector("body").addEventListener("click",RetourDefaultNom)   //quand on uclick sur l'écran (n'importe où) => lancer fonction change()
@@ -792,10 +847,11 @@ p{margin:0rem}
 
         function RetourDefaultNom(){
             if (!(inputName.classList.contains("default"))){
-                if (inputName.value == "" && inputName.classList.contains("BLUR")){     //si input est vide ET la zone de texte est déselectionnée
-                    inputName.value = "Utilisateur1";      //Le texte redevient celui par défault, opacité 0.3 et reprend la classe Default.
+                if ((inputName.value == "" && inputName.classList.contains("BLUR")) || (newUserName)){     //si input est vide ET la zone de texte est déselectionnée
+                    inputName.value = "ex : Joueur1";      //Le texte redevient celui par défault, opacité 0.3 et reprend la classe Default.
                     inputName.style.color = "rgb(0,0,0,0.4)";
                     inputName.classList.add("default");
+                    newUserName=false
                     
                     //L'ajout de la condition BLUR évite que input se remete automatiquement
                     //en valeur par défault lorsque l'utilisateur avait simplement effacé du texte
