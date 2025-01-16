@@ -349,7 +349,7 @@ p{margin:0rem}
                         <input type="radio" name="level" class="levels" value="Niv1"> Facile<br>
                         <input type="radio" name="level" class="levels" value="Niv2"> Moyen<br>
                         <input type="radio" name="level" class="levels" value="Niv3"> Difficile<br>
-                        <input type="radio" name="level" class="levels" value="Niv4"> IMPOSSIBLE<br>
+                        <input type="radio" name="level" class="levels" value="Niv4"> LÉGENDAIRE<br>
                     </div>
                     <p class="invalid hide">Choisissez un niveau</p>
                 </article>
@@ -412,6 +412,11 @@ p{margin:0rem}
         let bestScore = 0;
         let timer;          //nom du futur setInterval (on nomme ici pour éviter de créer une simple var locale en nommant dans une fonc => On peut la clear depuis n'importe où)
 
+
+        let spareTime = 0   //le temps de réfléxion (entre 2 appuis, sans compter les temps de clignottement)
+        let mistakes = 0
+
+
         const screenHistory = document.querySelector(".history-list")
         document.querySelector(".button-history").addEventListener("click",showHistory)
         document.querySelector(".button-menu").addEventListener("click",hideHistory)
@@ -460,8 +465,11 @@ p{margin:0rem}
             if (!check()){                   /*avec les () parce qu'elle retourne un booléen (true ou false)*/
         }
             if (check()){
+                console.log("go game !!")
                 screenPack.innerHTML =''
                 let localPack = boot();        //toute premiere initialisation ET localPack parce que cette variable est LOCALE
+
+                 
 
                 localPack.forEach((i) => {
                     i.addEventListener("click", ()=>{clickCards(i)}) //chaque carte est sensible à l'évènement "click", lui faisant executer "retourner()"
@@ -475,9 +483,12 @@ p{margin:0rem}
 
         function setTime(){
             timer = window.setInterval(() => {
-    
                 remainingTime = remainingTime - 1;  //décompte (en secondes)
                 
+                if (onPlay){
+                    spareTime = spareTime + 1
+                }
+
                 let seconds = remainingTime%60
                 if (seconds<10){seconds = "0"+seconds}  //permet d'avoir un format 1:03 au lieu de 1:3 quand il reste 1 minute et 3 secondes
 
@@ -520,7 +531,7 @@ p{margin:0rem}
                         //let a= screenScore.textContent                à quoi sert cette ligne, putain
                     
                         setTimeout(()=>{updateScore(), 500})
-                    }
+                    }else{}
                 }
 
                 //A chaque fois qu'une nouvelle carte est retournée, on controle les victoire (si le joueur a gagné ou perdu)
@@ -534,6 +545,44 @@ p{margin:0rem}
             }
         }
 
+        function valuePoint(localTime, localMistake){
+            //ICI le calcule de la valeur des points => on la retourne
+            let points = 50
+
+            //changement en fonction du niveau sélectionné (sauf niveau 1 => reste à 50)
+            //POINTS DE BASES => Niveau 1 : 50 ----- Niveau 2 : 61 ----- Niveau 3 : 73 ----- Niveau 4 : 100
+            if (parseInt(selectionLevel.id)==2){
+                points = Math.trunc(points*1.23)    //la valeur des points change en fonction du niveau de difficulté choisi (il affecte le temps, donc logique)
+            }
+            if (parseInt(selectionLevel.id)==3){
+                points = Math.trunc(points*1.46)
+            }
+            if (parseInt(selectionLevel.id)==4){
+                points = Math.trunc(points*2)     //si qqu gagne une partie légendaire, dur de battre le record sans une partie légendaire
+            }
+
+            //changement en fonction du temps mis pour jouer (quand le jeu est onPlay)
+            //Ne compte pas les temps de clignottement, évidement
+            // temps<=3sec : *2     3sec<temps<=9sec :*1.5      9sec<temps : *1
+
+            if (localTime <4){
+                points = Math.trunc(points*2)
+            }
+            if (3<localTime && localTime <10){
+                points = Math.trunc(points*1.5)
+            }
+
+
+            //changement en fonction du nombre d'erreurs => retourner 2 cartes différentes = 1 erreur
+            // 0 erreur = *1.5          1 erreur = *1.35        2 erreurs = 1.2         (on enlève 0.15 au multiple à chaque fois)
+
+            if(1.5-(0.15*localMistake)>0){
+                points = Math.trunc(points*(1.5-(0.15*localMistake)))
+            }
+
+
+            return(points)
+        }
 
         function reBoot(){
 
@@ -548,7 +597,7 @@ p{margin:0rem}
             if (score>bestScore){
                 bestScore = score
                 document.querySelector("#congratulation").classList.remove("hide");
-                document.querySelector("#actual-score").textContent =  "Score : " + bestScore + "("+inputName.value+")";
+                document.querySelector("#actual-score").textContent =  "Score : " + bestScore + " ("+inputName.value+")";
                 document.querySelector("#best-score").textContent = "Meilleur score : " + bestScore + " ("+inputName.value+")";
 
                 //inputName.value
@@ -578,7 +627,7 @@ p{margin:0rem}
 
             endTitle="";
             endParagraph="";
-            console.log("init level : "+ selectionLevel.id)
+            //console.log("init level : "+ selectionLevel.id)
         }
 
 
@@ -591,7 +640,7 @@ p{margin:0rem}
 
         function computeVariables(){  //choix des valeurs en début de partie => pour le nombre de coups accordés, temps accordés
 
-            console.log(selectionLevel.id)
+            //console.log(selectionLevel.id)
 
             allShots = Math.trunc(parseInt(selectionNumberCards.value) *(4/parseInt(selectionLevel.id)));
             screenRemainingShots.textContent = allShots;
@@ -665,10 +714,14 @@ p{margin:0rem}
                 
                 temporaryFlipCards.splice(0,temporaryFlipCards.length) //fin de comparaison => il n'y a plus de cartes comparées
                 numberFlipCards = numberFlipCards+2   //ajout de 2 au nb de cartes trouvées
-                score = score + 150     //ajout de points au score
+                score = score + valuePoint(spareTime, mistakes)     //ajout de points au score
+                spareTime=0;
+                mistakes = 0;
             }
 
             else{
+                mistakes = mistakes +1;          //une erreur a été commise
+                
                 document.querySelectorAll(".cards")[parseInt(card1[1])].classList.add("unknown")
                 document.querySelectorAll(".cards")[parseInt(card2[1])].classList.add("unknown")
 
@@ -837,22 +890,8 @@ p{margin:0rem}
                     return (false)
                 }else{                                                                                  //et que le niveau est coché                 = tout est conforme
                     screenFlipCards.textContent = "0 / "+selectionNumberCards.value
+                
                     
-                    /*
-                    if (parseInt(selectionLevel.id)==1){
-                        screenRemainingShots.textContent = parseInt(selectionNumberCards.value)*4;
-                    }
-                    if (parseInt(selectionLevel.id)==2){
-                        screenRemainingShots.textContent = parseInt(selectionNumberCards.value)*3;
-                    }
-                    if (parseInt(selectionLevel.id)==3){
-                        screenRemainingShots.textContent = parseInt(selectionNumberCards.value)*2;
-                    }
-                    if (parseInt(selectionLevel.id)==4){
-                        screenRemainingShots.textContent = parseInt(selectionNumberCards.value);
-                    }
-                    screenScore.textContent = 0;
-                    */
                     computeVariables();
 
                     document.querySelectorAll(".invalid")[0].classList.add("hide");
