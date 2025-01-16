@@ -356,7 +356,8 @@
 
                 if (remainingTime <1){  
                     clearInterval(timer);
-                    justLose()}
+                    justLose()
+                }
 
             }, 1000)
         }
@@ -371,23 +372,23 @@
         function boot(){
 
             while (randomIndex.length<(parseInt(selectionNumberCards.value)/2)){
-                let a= (Math.floor(Math.random() * 100))% 16;
-                if (!(randomIndex.includes(a))){
-                    randomIndex.push(a);
+                let randomNumber= (Math.floor(Math.random() * 100))% 16;
+                if (!(randomIndex.includes(randomNumber))){
+                    randomIndex.push(randomNumber);
                 }
             }     //On obtient une liste des noms aléatoires (numéros entre 0 et 16) des images utilisées pour la partie.
 
 
             randomIndex.forEach((i)=>{      //Pour chaque index de la liste
-                sortedPack.push([linkPictures+i+".png", 1]);      //le paquet aura la forme [[objet1, 1], [objet1, 2], [objet2, 1], [objet2, 2]...]
-                sortedPack.push([linkPictures+i+".png", 2]);      //permet d'avoir des doublons différenciables
+                sortedPack.push([linkPictures+i+".jpg", 1]);      //le paquet aura la forme [[objet1, 1], [objet1, 2], [objet2, 1], [objet2, 2]...]
+                sortedPack.push([linkPictures+i+".jpg", 2]);      //permet d'avoir des doublons différenciables
             })    //on obtient un paquet de jeu entier non mélangé (les paires sont côtes à côtes) => un élément = [url de l'image, numéro 1 ou 2 pour différencier chaque doublon]
 
 
             for (i=0; i<randomIndex.length*2; i=i+1){
-                let a= (Math.floor(Math.random() * 100))%(sortedPack.length);   //on obtient un index aléatoire du paquet non mélangé => le reste de la division d'un nb aléatoire entre 0 et 100, par la taille du paquet restant (nb entre 0 et taille du paquet-1)
-                shuffledPack.push(sortedPack[a]);        //cette carte aléatoire (sortedPack[a]) est ajouté dans une nouvelle pile
-                sortedPack.splice(a,1)              //Cette carte est ensuite enlevée du paquet non mélangé
+                let randomIndexShuffle= (Math.floor(Math.random() * 100))%(sortedPack.length);   //on obtient un index aléatoire du paquet non mélangé => le reste de la division d'un nb aléatoire entre 0 et 100, par la taille du paquet restant (nb entre 0 et taille du paquet-1)
+                shuffledPack.push(sortedPack[randomIndexShuffle]);        //cette carte aléatoire (sortedPack[a]) est ajouté dans une nouvelle pile
+                sortedPack.splice(randomIndexShuffle,1)              //Cette carte est ensuite enlevée du paquet non mélangé
             }       // le paquet mélangé est donc une combinaison aléatoire des cartes du paquet non mélangé
 
             shuffledPack.forEach((i) => {distributeTheCards(i)});     //on distribue chaque carte dans le jeu
