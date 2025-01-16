@@ -9,341 +9,260 @@
 
 <body>
     
-    <div class="overlay-menu">
-        <section class="menu">
-            <article class="BS">
-                <h2>Meilleur score</h2>
-                <p>0</p>
-            </article>
-            <h1>Nouvelle partie</h1>
+    <div class="body-game">
+    
+        <section class="information-game">
 
-            <article class="user">
-                <h3>Nom d'utilisateur</h3>
-                <input name="name" class="Default" type="text" value="User1"/>
-                <p class="invalide hide">Le nom d'utilisateur doit contenir entre 1 et 10 caractères.</p>
-            </article>
-            <article class="Nb-choix">
-                <h3>Nombre de cartes</h3>
-                <select name="Nb" id="Nb">
-                    <option class="SelecNbC" value="6">6 cartes</option>
-                    <option class="SelecNbC" value="10">10 cartes</option>
-                    <option class="SelecNbC" value="16">16 cartes</option>
-                    <option class="SelecNbC" value="20">20 cartes</option>
-                    <option class="SelecNbC" value="32">32 cartes</option>
-                </select>
-            </article>
-        
-            <article>
-                <div class="Niveau-choix">
-                    <h3>Niveau : </h3>
-                    <div class="Niveau-S" id="0">
-                        <input type="radio" name="Niveau" class="Niveaux" value="Niv1"> Facile<br>
-                        <input type="radio" name="Niveau" class="Niveaux" value="Niv2"> Moyen<br>
-                        <input type="radio" name="Niveau" class="Niveaux" value="Niv3"> Difficile<br>
-                        <input type="radio" name="Niveau" class="Niveaux" value="Niv4"> IMPOSSIBLE<br>
-                    </div>
-                </div>
-                <p class="invalide hide">Choisissez un niveau</p>
-            </article>
-        
-            <button class="play" id="0">Jouer !</button>
-            <a href="test.html">TEST</a>
-            <a href="http://127.0.0.1:5500/Images">images</a>
-            <a href="indexTEST.html">V2 du machin</a>
-            <a href="indexV3.html">V3 du jeu !!</a>
-        </section>
-    </div>
-
-    <div class="corps">
-        <section id="paquet">
-
-            <!--
-                <article class="carte" id="C1"><p class="valeur">1</p></article>
-                <article class="carte" id="C2"><p class="valeur">2</p></article>
-                <article class="carte" id="C3"><p class="valeur">3</p></article>
-                <article class="carte" id="C4"><p class="valeur">4</p></article>
-                <article class="carte" id="C5"><p class="valeur">5</p></article>
-                <article class="carte" id="C6"><p class="valeur">6</p></article>
-            -->
-        </section>
-    
-        <section class="commandes">
-    
-            <article class="Comm1" id="NbCartesAff">
-                <h3>Nb de cartes</h3>
-                <p id="nb">20</p>
+            <article class="article-information-game">
+                <h3 class="h3-on-play">Temps</h3>
+                <p id="screen-remaining-time">0</p>
             </article>
     
-            <article class="Comm1" id="CoupsRestantsAff">
-                <h3>Coups restants</h3>
-                <p id="coups">50</p>
+            <article class="article-information-game">
+                <h3 class="h3-on-play">Cartes</h3>
+                <p id="screen-number-of-cards"></p>                 
             </article>
     
-            <article class="Comm1" id="ScoreAff">
-                <h3>Score</h3>
-                <p id="pts" value="0">16/20</p>
+            <article class="article-information-game">
+                <h3 class="h3-on-play">Coups</h3>
+                <p id="screen-remaining-shots"></p>            
             </article>
     
-            <button class="Comm1" id="New">Nouvelle partie</button>
+            <article class="article-information-game">
+                <h3 class="h3-on-play">Score</h3>
+                <p id="screen-score">0</p>       
+            </article>
+    
+            <button class="article-information-game" id="button-new-game">Nouvelle partie</button>
             
         </section>
+
+        <section id="pack-of-cards">
+            <!--
+                <article class="cards" id="C1">
+                    <p class="image hide"></p>
+                </article>
+                <style>
+                    #C1>p{background-image: url("");}
+                </style>
+            -->
+        </section>
     </div>
 
+    
 
+    <div class="overlay-menu">
+
+        <div class="menu-visibility">   <!-- on peut pas display none sur un truc qui a deja un display flex ou grid, donc nouveau contenant qu'on display none au besoin-->
+
+            <section class="menu">    <!--il y avait aussi une classe menu, pour le css!!-->
+                
+                <h1 class="hide"id="congratulation">Nouveau meilleur score !</h1>
+
+                <article class="hide" id="end-game-message">                
+                    <p id="end-game-title"></p>                            
+                    <p id="end-game-paragraph"></p> 
+                </article>
+                
+                <article class="hide" id="scores">
+                    <h2 id="actual-score">Score : </h2>
+                    <h4 id="best-score">Meilleur score : </h4>
+                </article>
+
+                <h1>Nouvelle partie</h1>
+
+                <article class="article-user-name">
+                    <h3>Nom d'utilisateur</h3>
+                    <input name="name" class="default" type="text" value="ex : Joueur1"/>
+                    <p class="invalid hide">Le nom d'utilisateur doit contenir entre 1 et 10 caractères.</p>
+                </article>
+
+                <article class="article-number-cards">
+                    <h3>Nombre de cartes</h3>
+                    <select name="selector" id="selection-number-cards">
+                        <option class="choice-number-card" value="8">8 cartes</option>
+                        <option class="choice-number-card" value="12">12 cartes</option>
+                        <option class="choice-number-card" value="16">16 cartes</option>
+                        <option class="choice-number-card" value="20">20 cartes</option>
+                        <option class="choice-number-card" value="24">24 cartes</option>
+                    </select>
+                </article>
+            
+                <article class="article-choice-level">
+                    <h3>Niveau : </h3>
+                    <div class="selection-level" id="0">
+                        <input type="radio" name="level" class="levels" value="Niv1"> Facile<br>
+                        <input type="radio" name="level" class="levels" value="Niv2"> Moyen<br>
+                        <input type="radio" name="level" class="levels" value="Niv3"> Difficile<br>
+                        <input type="radio" name="level" class="levels" value="Niv4"> LÉGENDAIRE<br>
+                    </div>
+                    <p class="invalid hide">Choisissez un niveau</p>
+                </article>
+            
+                <button class="button-play" id="0">Jouer !</button>
+
+                <button class="button-history">Historique</button>
+            
+            </section>
+        </div>
+        
+        <div class="history-visibility hide">
+            <section class="menu">
+            
+                <h2>Historique des parties</h2>
+
+                <div class="history-list">
+
+                </div>
+
+                <button class="button-menu">Retour au menu principal</button>
+            
+            </section>
+        </div>
+
+    </div>
+    
 
 
     <script>
 
+        //
+        //
+        //
+        //DÉFINITION DE TOUTES LES VARIABLES
+        //
+        //
+        //
+
+        //nom, score, nb de coups joués, sa durée
+        let historyGames = [["Joueur", "Score", "Coups", "Temps"],["-------------------","-------------------","-------------------","-------------------"]];
+
         /*BOUTONS DU MENU*/
-        const BoutonJouer = document.querySelector(".play")
-        const InputNom = document.querySelector(".user>input")
-        const SelectionNombre = document.querySelector("#nb")
-        const SelectNiv = document.querySelector('.Niveau-S')
+        const buttonPlay = document.querySelector(".button-play");
+        const inputName = document.querySelector(".article-user-name>input");
+        const selectionLevel = document.querySelector('.selection-level');
 
         /*UNE PARTIE*/
-        const cartes = document.querySelector("#nb")
-        const coups = document.querySelector("#coups")
-        const score = document.querySelector("#pts")
-
-        let cartesFinit = []
-
-        console.log(cartes)
+        const screenFlipCards = document.querySelector("#screen-number-of-cards");
+        const screenRemainingShots = document.querySelector("#screen-remaining-shots");
+        const screenScore = document.querySelector("#screen-score");
 
         /*IMAGES*/
-        const LienIMG = "http://127.0.0.1:5500/Images/"
-        let index = [];
-        let demiPaquet = [];        //que la moitié du paquet, sans doubles
-        let paquet = [];                //paquet entier non mélangé
-        let paquetM = [];               //le paquet mélangé
+        const linkPictures = "http://127.0.0.1:5500/images-pack/";
+        let randomIndex = [];
+        let halfPack = [];        //que la moitié du paquet, sans doubles
+        let sortedPack = [];                //paquet entier non mélangé
+        let shuffledPack = [];               //le paquet mélangé
 
-        const carteAff = document.querySelectorAll(".carte")
-        const paquetAff = document.querySelector('#paquet') //dans la fonction distribution()
+        let numberFlipCards = 0;        //Nb de cartes retournées
+        let score = 0;
 
-        //const images = []for(let i=0; i<17; i=i+1){LienIMG+i+".jpg"}
+        const screenPack = document.querySelector('#pack-of-cards'); //dans la fonction distributeTheCards()
 
-        /*NOUVELLE PARTIE*/
-        document.querySelector("#New").addEventListener("click", NewParti)
+        let onPlay = true;           //Si la partie est en cours : le joueur n'a ni gagné ni perdu
 
-        function NewParti(){
-            document.querySelector(".BS>p").textContent = score.textContent
-            document.querySelector(".overlay-menu").classList.remove("hide");
-            //InputNom.value ="";
-            index.splice(0, index.length);
-            demiPaquet.splice(0, demiPaquet.length);
-            paquet.splice(0, paquet.length);
-            paquetM.splice(0, paquetM.length*2);
-            paquetAff.innerHTML =''
+        let endTitle="";
+        let endParagraph="";
+        //let Won = false; ???
+        let bestScore = 0;
+        let timer;          //nom du futur setInterval (on nomme ici pour éviter de créer une simple var locale en nommant dans une fonc => On peut la clear depuis n'importe où)
+
+
+        let allShots = 0;
+        let allTime = 0;
+        let usedTime = 0;
+        let remainingTime = 0;
+        let usedShots = 0;
+        let remainingShots = 0;
+
+        let spareTime = 0;   //le temps de réfléxion (entre 2 appuis, sans compter les temps de clignottement)
+        let mistakes = 0;
+
+        let temporaryFlipCards = [];
+
+        let newUserName = false;
+
+
+        //
+        //
+        //
+        // FONCTIONS
+        //
+        //
+        //
+
+        //
+        //
+        // SUR LA PAGE MENU
+        //
+        //
+
+        const screenHistory = document.querySelector(".history-list");
+        document.querySelector(".button-history").addEventListener("click",showHistory);
+        document.querySelector(".button-menu").addEventListener("click",hideHistory);
+
+        function showHistory(){
+            document.querySelector(".menu-visibility").classList.add("hide");           //on cache le menu principale
+            document.querySelector(".history-visibility").classList.remove("hide");    //pour ne montrer que l'historique
+
+            historyGames.forEach((i)=>{                                                //pour chaque élément de l'historique, on ajoute le html suivant
+                screenHistory.insertAdjacentHTML("beforeend",`
+                    <article class="history-element">
+                        <p>${i[0]}</p>
+                        <p>${i[1]}</p>
+                        <p>${i[2]}</p>
+                        <p>${i[3]}</p>
+                    </article>
+                `)                                                  //cela permet de créer par la suite une sorte de tableau grâce au css existant
+            })
         }
 
-        console.log(LienIMG+1+".jpg")
+        function hideHistory(){
+            document.querySelector(".history-visibility").classList.add("hide");    //on cache l'historique
+            document.querySelector(".menu-visibility").classList.remove("hide");    //pour montrer le menu principal
 
-        let enCours = false      //détermine si la partie est encore en cours ou finit
-
+            screenHistory.innerHTML='';                  //on efface le html d'historique pour éviter tout doublons en le réaffichant
+        }
 
         /*check pour jouer*/
-        BoutonJouer.addEventListener("click",gaming)  
-
-        let card1 =[]
-        let card2 =[]
+        buttonPlay.addEventListener("click",gaming);  
 
         function gaming(){
-            if (!verifier()){                   /*avec les () parce qu'elle retourne un booléen (true ou false)*/
+            if (!check()){                   /*avec les () parce qu'elle retourne un booléen (true ou false)*/
             }
-            if (verifier()){
-                initialisation();
-                console.log("finit")
-                enCours = true
+            if (check()){
+                console.log("go game !!");
+                screenPack.innerHTML ='';
+                let localPack = boot();        //toute premiere initialisation ET localPack parce que cette variable est LOCALE
 
-                carteAff.forEach(function (i){
-                    i.addEventListener("click", ()=>{
-                        document.querySelector(i.id).classList.remove("hide")
-                    })
+                localPack.forEach((i) => {
+                    i.addEventListener("click", ()=>{clickCards(i)}) //chaque carte est sensible à l'évènement "click", lui faisant executer "retourner()"
                 })
 
-                /*
-                for (i=0; i<paquetM.length; i=i+1){
-                    let s = "#C"+i
-                    document.querySelector(s).addEventListener("click", ()=>{
-                        let y = "#C"+i+">p";
-                        document.querySelector(y).classList.remove(hide);
-                        /*
-                        if (card1==[]){
-                            card1.push(paquetM[i]);
-                            let y = "#C"+i+">p";
-                            document.querySelector(y).classList.add(hide)}
-                        else{
-                            if(card2==[]){card2.push(paquetM[i])}
-                        }
-                        
-                    })
-                }
-                
-                document.querySelector.addEventListener("click", () => {
-                    card1.push(paquetM[carteAff.id[1]])
-                    console.log(card1)
-                    //document.querySelector("#carteAff.id[1]")
-                */
-                
-                
-            }
-
-        }
-
-        function initialisation(){
-
-            while (index.length<(parseInt(SelecNbC.value)/2)){
-                let a= (Math.floor(Math.random() * 100))% 17;
-                if (!(index.includes(a)) && (a!=0)){
-                    index.push(a)
-                }
-            }
-
-            for (i=0; i<(index.length); i=i+1){           //On cherche les images associées au nb aléatoire (compris entre 1 et 16, prcque 16 images dans le fichier)
-                demiPaquet.push(LienIMG+index[i]+".jpg")
-            }
-
-            for (i=0; i<(index.length); i=i+1){   //On copie toute ces images => le paquet du jeu est entier
-                paquet.push([demiPaquet[i], 1]);          //le paquet aura la forme [[objet1, 1], [objet1, 2], [objet2, 1], [objet2, 2]...]
-                paquet.push([demiPaquet[i], 2]);          //permet d'avoir des doublies différenciables
-            }
-
-            //console.log(paquet)
-
-            for (i=0; i<index.length*2; i=i+1){
-                let a= (Math.floor(Math.random() * 100))% (index.length*2-i);
-                paquetM.push(paquet[a]);     
-                paquet.splice(a,1)           
-            }
-            //console.log(paquetM)
-            //console.log("2 "+paquetM.length+" LOL "+paquet.length);
-            //console.log("AHAH")
-            paquetM.forEach((i) => distribution(i))
-            //console.log("essaie encore")
-        }
-
-        function distribution(carte){
-            console.log("Tape ton seum")
-            paquetAff.insertAdjacentHTML("beforeend",`
-                <article class="cartes" id="C${paquetM.findIndex((a) => a==carte)}"><p class="image hide"></p></article>
-                <style>
-                    #C${paquetM.findIndex((a)=> a==carte)}>p{background-image: url("${carte[0]}");}
-                </style>
-            `)
-        }
-
-
-        function comparer(){
-            //
-        }
-
-
-
-        /*
-        (- Mettre en jeu le nb de cartes selectionné)
-
-        INITIALISATION
-        - Ajouter un nb suffisant de variables (ex : une image avec un certain id)
-        - Mettre les variables dans des listes
-        - Mélanger les cartes en faisant des randint, on place la carte, puis supprimer son index des possibilités du randint
-
-        - Pourquoi pas mélanger ET ajouter les cartes en même temps (niveau facile on les vois qq instants)
-        
-
-        JEU
-        - fonction qui se retourne elle-même avec 2 variables
-        - variable 1 : première carte selectionnée
-        - on attend
-        - variable 2 : 2eme carte selectionnée
-        - on attend
-        - si les cartes sont identiques, elles clignottes en vert et disparaissent
-        - des points sont ajoutés au score (200 % nbcartes * quotient déterminé par niveau)
-        - si les cartes sont différentes, elles clignottes en rouge puis disparaissent
-        - le score reste le même
-        - fin de la partie quand nb de carte = 1 (100/100 ou 20/20, etc)
-
-
-        SCORE
-        - pour voir l'évolution, on fait pas score = score + 200
-                    mais plutot for i in range(200) : score +=1
-                    avec un time out de qq mili secondes
-
-        FIN
-        Une page s'affiche avec :
-        - Score
-        - Meilleur score
-        - Rejouer
-        
-        */
-
-
-
-
-        /*vérifier si les infos sont valides*/
-
-        function verifier(){
-            if (InputNom.value.length<1 || InputNom.value.length>10){                       //Si le nom d'utilisateurn'est pas conforme
-                if (SelectNiv.id == "0"){                                                                //et que le niveau n'a pas été coché       = ensemble non conforme
-                    document.querySelectorAll(".invalide")[0].classList.remove("hide");
-                    InputNom.value = "";
-                    document.querySelectorAll(".invalide")[1].classList.remove("hide");
-                    return (false)
-                }else{                                                                                   //mais que le niveau a été coché           = ensemble non confomre
-                    document.querySelectorAll(".invalide")[0].classList.remove("hide");
-                    InputNom.value = "";
-                    document.querySelectorAll(".invalide")[1].classList.add("hide");
-                    return (false)
-                }
-            }else{                                                                           //Si le nom d'utilisateur est conforme
-                if (SelectNiv.id == "0"){                                                                //mais que le niveau n'a pas été coché     = ensemble non confomre
-                    document.querySelectorAll(".invalide")[0].classList.add("hide");
-                    document.querySelectorAll(".invalide")[1].classList.remove("hide");
-                    return (false)
-                }else{                                                                                  //et que le niveau est coché                 = tout est conforme
-                    cartes.textContent = "0/"+SelecNbC.value
-                    
-                    if (parseInt(SelectNiv.id)==1){
-                        coups.textContent = parseInt(SelecNbC.value)*4;
-                    }
-                    if (parseInt(SelectNiv.id)==2){
-                        coups.textContent = parseInt(SelecNbC.value)*3;
-                    }
-                    if (parseInt(SelectNiv.id)==3){
-                        coups.textContent = parseInt(SelecNbC.value)*2;
-                    }
-                    if (parseInt(SelectNiv.id)==4){
-                        coups.textContent = parseInt(SelecNbC.value);
-                    }
-
-                    score.textContent = 0;
-                    document.querySelectorAll(".invalide")[0].classList.add("hide");
-                    document.querySelectorAll(".invalide")[1].classList.add("hide");
-
-                    document.querySelector(".overlay-menu").classList.add("hide");
-                    console.log(InputNom.value+SelecNbC.value+ SelectNiv.id);
-
-                    return (true)
-
-                }
+                setTime();           //setTime lance le chrono
+                onPlay = true;
             }
         }
 
 
-        /*POUR L'EFFET SUR LE INPUT*/    /*WARNING : ce code est INTÉGRALEMENT DE MOI, mais je l'ai repris d'un autre de mes projets (le site Bento)*/
-        document.querySelector("body").addEventListener("click",RetourDefaultNom)   //quand on uclick sur l'écran (n'importe où) => lancer fonction change()
-        InputNom.addEventListener("click",Write)   //quand on uclick sur l'écran (n'importe où) => lancer fonction change()
 
-        InputNom.onblur = inpBL;                   //quand input est inactif (que l'utilisateur a cliqué ailleurs pour faire autre chose)
-        InputNom.onfocus = inpFOC;                 //quand l'utilisateur utilise input (la barre de texte est présente dans la zone de texte)
+        /*POUR L'EFFET SUR LE INPUT*/
+        document.querySelector("body").addEventListener("click",revortDefaultUserName);   //quand on click sur l'écran (n'importe où) => lancer fonction REVORTDEFAULTNAME()
+        inputName.addEventListener("click",write);   //quand on click sur l'écran (n'importe où) => lancer fonction WRITE()
 
-        function inpBL(){InputNom.classList.add("BLUR")}         //Pour connaître l'état de la zone de texte (dans les conditions de l'autre fonction)
-        function inpFOC(){InputNom.classList.remove("BLUR")}     // si BLUR est une classe de input, alors l'utilisateur n'utilise pas la zone de texte
+        inputName.onblur = inpBL;                   //quand input est inactif (que l'utilisateur a cliqué ailleurs pour faire autre chose)
+        inputName.onfocus = inpFOC;                 //quand l'utilisateur utilise input (la barre de texte est présente dans la zone de texte)
 
-        function RetourDefaultNom(){
-            if (!(InputNom.classList.contains("Default"))){
-                if (InputNom.value == "" && InputNom.classList.contains("BLUR")){     //si input est vide ET la zone de texte est déselectionnée
-                    InputNom.value = "User1";      //Le texte redevient celui par défault, opacité 0.3 et reprend la classe Default.
-                    InputNom.style.color = "rgb(0,0,0,0.4)";
-                    InputNom.classList.add("Default");
+        function inpBL(){inputName.classList.add("is-blur")}         //Pour connaître l'état de la zone de texte (dans les conditions de l'autre fonction)
+        function inpFOC(){inputName.classList.remove("is-blur")}     // si BLUR est une classe de input, alors l'utilisateur n'utilise pas la zone de texte
+
+        function revortDefaultUserName(){           //utilité ??? remettre la valeur par défault dans le input quand il est laissé vide
+            if (!(inputName.classList.contains("default"))){
+                if ((inputName.value == "" && inputName.classList.contains("is-blur")) || (newUserName)){     //si input est vide ET la zone de texte est déselectionnée
+                    inputName.value = "ex : Joueur1";      //Le texte redevient celui par défault, opacité 0.3 et reprend la classe Default.
+                    inputName.style.color = "rgb(0,0,0,0.4)";
+                    inputName.classList.add("default");
+                    newUserName=false;
                     
                     //L'ajout de la condition BLUR évite que input se remete automatiquement
                     //en valeur par défault lorsque l'utilisateur avait simplement effacé du texte
@@ -352,33 +271,454 @@
             }
         }
 
-        function Write(){
-            if (InputNom.classList.contains("Default")){         //Pour savoir si le texte a cette valeur par défault, ou si L'UTILISATEUR a recopier la valeur par défault
-                InputNom.value = "";                             //La zone de texte se vide automatiquement
-                InputNom.style.color = "rgb(0,0,0,1)";           //Et l'opacité revient à 1
-                InputNom.classList.remove("Default");            //Ce n'est plus une valeur par défault mais bien le texte de l'utilisateur
+        function write(){       //utilité ??? ne pas écrire en opacité 0.4 et enlever le texte par default pour écrire notre pseudo !!
+            if (inputName.classList.contains("default")){         //Pour savoir si le texte a cette valeur par défault, ou si L'UTILISATEUR a recopier la valeur par défault
+                inputName.value = "";                             //La zone de texte se vide automatiquement
+                inputName.style.color = "rgb(0,0,0,1)";           //Et l'opacité revient à 1
+                inputName.classList.remove("default");            //Ce n'est plus une valeur par défault mais bien le texte de l'utilisateur
             }
         }
+        //FIN EFFET INPUT
 
 
         /*NOMBRE DE CARTES*/
-
-        const SelecNbC = document.querySelector("#Nb")  //la valeur selectionnée est SelecNbC.value
+        const selectionNumberCards = document.querySelector("#selection-number-cards");  //la valeur selectionnée est selectionNumberCards.value
 
 
         /*NIVEAU*/
         /*a chaque fois qu'on en coche un, une variable change (par exemple, value, d'une variable plus globale)*/
-        const niv1 = document.querySelectorAll(".Niveaux")[0]    //On associe la constante "niv1" à la section de code (le input) correspondant au 1er niveau
-        const niv2 = document.querySelectorAll(".Niveaux")[1]
-        const niv3 = document.querySelectorAll(".Niveaux")[2]
-        const niv4 = document.querySelectorAll(".Niveaux")[3]
+        const level1 = document.querySelectorAll(".levels")[0];    //On associe la constante "level1" à la section de code (le input) correspondant au 1er niveau
+        const level2 = document.querySelectorAll(".levels")[1];
+        const level3 = document.querySelectorAll(".levels")[2];
+        const level4 = document.querySelectorAll(".levels")[3];
 
-        niv1.addEventListener("change", () => {SelectNiv.id = "1"})  //en selectionnant ou reselectionnant ce input, le id du div prend sa valeur
-        niv2.addEventListener("change", () => {SelectNiv.id = "2"})  //donc le id du div.Niveau-S correspond à la valeur sélectionnée, à chaque instant.
-        niv3.addEventListener("change", () => {SelectNiv.id = "3"})
-        niv4.addEventListener("change", () => {SelectNiv.id = "4"})
+        level1.addEventListener("change", () => {selectionLevel.id = "1"});  //en selectionnant ou reselectionnant ce input, le id du div prend sa valeur
+        level2.addEventListener("change", () => {selectionLevel.id = "2"});  //donc le id du div.selection-level correspond à la valeur sélectionnée, à chaque instant.
+        level3.addEventListener("change", () => {selectionLevel.id = "3"});
+        level4.addEventListener("change", () => {selectionLevel.id = "4"});
 
-    
+
+
+        /*vérifier si les infos sont valides*/
+
+        function check(){
+
+            if (inputName.value.length<1 || inputName.value.length>10){                       //Si le nom d'utilisateur n'est pas conforme
+                if (selectionLevel.id == "0"){                                                                //et que le niveau n'a pas été coché       = ensemble non conforme
+                    document.querySelectorAll(".invalid")[0].classList.remove("hide");
+                    inputName.value = "";
+                    document.querySelectorAll(".invalid")[1].classList.remove("hide");
+                    return (false)
+                }else{                                                                                   //mais que le niveau a été coché           = ensemble non confomre
+                    document.querySelectorAll(".invalid")[0].classList.remove("hide");
+                    inputName.value = "";
+                    document.querySelectorAll(".invalid")[1].classList.add("hide");
+                    return (false)
+                }
+            }else{                                                                           //Si le nom d'utilisateur est conforme
+                if (selectionLevel.id == "0"){                                                                //mais que le niveau n'a pas été coché     = ensemble non confomre
+                    document.querySelectorAll(".invalid")[0].classList.add("hide");
+                    document.querySelectorAll(".invalid")[1].classList.remove("hide");
+                    return (false)
+                }else{                                                                                  //et que le niveau est coché                 = tout est conforme
+                    screenFlipCards.textContent = "0 / "+selectionNumberCards.value;
+                
+                    
+                    computeVariables();
+
+                    document.querySelectorAll(".invalid")[0].classList.add("hide");
+                    document.querySelectorAll(".invalid")[1].classList.add("hide");
+
+                    document.querySelector(".overlay-menu").classList.add("hide");
+                    console.log(inputName.value+selectionNumberCards.value+ selectionLevel.id);
+
+                    return (true)
+
+                }
+            }
+        }
+
+
+
+        //FONCTION DU TIMER
+        function setTime(){
+            timer = window.setInterval(() => {
+                remainingTime = remainingTime - 1;  //décompte (en secondes)
+                
+                if (onPlay){
+                    spareTime = spareTime + 1
+                }
+
+                let seconds = remainingTime%60;
+                if (seconds<10){seconds = "0"+seconds}  //permet d'avoir un format 1:03 au lieu de 1:3 quand il reste 1 minute et 3 secondes
+
+                screenTime.textContent = (Math.trunc(remainingTime/60)+":"+ seconds);
+
+                if (remainingTime <1){  
+                    clearInterval(timer);
+                    justLose()}
+
+            }, 1000)
+        }
+
+        //
+        //
+        // INITIALISATION ET AUTRE
+        //
+        //
+
+        //PREMIERE INITIALISATION
+        function boot(){
+
+            while (randomIndex.length<(parseInt(selectionNumberCards.value)/2)){
+                let a= (Math.floor(Math.random() * 100))% 16;
+                if (!(randomIndex.includes(a))){
+                    randomIndex.push(a);
+                }
+            }     //On obtient une liste des noms aléatoires (numéros entre 0 et 16) des images utilisées pour la partie.
+
+
+            randomIndex.forEach((i)=>{      //Pour chaque index de la liste
+                sortedPack.push([linkPictures+i+".jpg", 1]);      //le paquet aura la forme [[objet1, 1], [objet1, 2], [objet2, 1], [objet2, 2]...]
+                sortedPack.push([linkPictures+i+".jpg", 2]);      //permet d'avoir des doublons différenciables
+            })    //on obtient un paquet de jeu entier non mélangé (les paires sont côtes à côtes) => un élément = [url de l'image, numéro 1 ou 2 pour différencier chaque doublon]
+
+
+            for (i=0; i<randomIndex.length*2; i=i+1){
+                let a= (Math.floor(Math.random() * 100))%(sortedPack.length);   //on obtient un index aléatoire du paquet non mélangé => le reste de la division d'un nb aléatoire entre 0 et 100, par la taille du paquet restant (nb entre 0 et taille du paquet-1)
+                shuffledPack.push(sortedPack[a]);        //cette carte aléatoire (sortedPack[a]) est ajouté dans une nouvelle pile
+                sortedPack.splice(a,1)              //Cette carte est ensuite enlevée du paquet non mélangé
+            }       // le paquet mélangé est donc une combinaison aléatoire des cartes du paquet non mélangé
+
+            shuffledPack.forEach((i) => {distributeTheCards(i)});     //on distribue chaque carte dans le jeu
+
+            return(document.querySelectorAll(".cards"))    //retourne une liste de toutes les cartes (sous forme de selection par le selecteur js)
+            //dans cet ordre parce qu'elles viennent juste d'être distribuées (inscruites dans le HTML)
+        }
+
+
+        //LA PARTIE A DÉJA ÉTÉ INITIALISÉ UNE FOIS, LA C'EST QUAND ON REJOUE
+        function reBoot(){
+            document.querySelector(".overlay-menu").classList.remove("hide");       //on retourne au menu principal
+            document.querySelector("#scores").classList.remove("hide");       //on retourne au menu principal
+
+
+            document.querySelector("#end-game-title").textContent = endTitle;
+            document.querySelector("#end-game-paragraph").textContent = endParagraph;
+            document.querySelector("#end-game-message").classList.remove("hide");      //message de fin ("félicitation, etc" ou "dommage, etc")
+            
+            if (score>bestScore){
+                bestScore = score
+                document.querySelector("#congratulation").classList.remove("hide");
+                document.querySelector("#actual-score").textContent =  "Score : " + bestScore + " ("+inputName.value+")";
+                document.querySelector("#best-score").textContent = "Meilleur score : " + bestScore + " ("+inputName.value+")";
+
+                //inputName.value
+            }else{
+                document.querySelector("#actual-score").textContent = "Score : " + score + " ("+inputName.value+")";
+                document.querySelector("#congratulation").classList.add("hide");
+            }
+
+            let seconds = allTime-remainingTime%60;
+            if (seconds<10){seconds="0"+seconds};
+            let timeForScreen = Math.trunc((allTime-remainingTime)/60) +":"+seconds;
+
+            historyGames.push([inputName.value, score, allShots-remainingShots, timeForScreen]);     //actualisation de la variable de l'historique
+            //historyGames = liste de parties. une partie = nom, score, nb de coups joués, sa durée
+
+            randomIndex.splice(0,randomIndex.length);
+            halfPack.splice(0,halfPack.length);        //que la moitié du paquet, sans doubles
+            sortedPack.splice(0,sortedPack.length);        //paquet entier non mélangé
+            shuffledPack.splice(0,shuffledPack.length);        //le paquet mélangé
+            temporaryFlipCards.splice(0,temporaryFlipCards.length);      //si on a arrêté une partie en cours, elle influencera pas la suivante
+
+            numberFlipCards = 0;        //le nombre de cartes trouvées
+            score = 0;
+
+            allShots = 0;
+            allTime = 0;
+            usedTime = 0;
+            remainingTime = 0;
+            usedShots = 0;
+            remainingShots = 0;
+
+            screenScore.textContent = 0;
+
+
+            newUserName = true;     //permet de valider la condition pour remettre le username à sa valeur par défault
+            revortDefaultUserName();
+
+            endTitle="";
+            endParagraph="";
+        }
+
+        //DISTRIBUTION DES CARTES
+        function distributeTheCards(card){
+            screenPack.insertAdjacentHTML("beforeend",`
+                <article class="cards unknown" id="C${shuffledPack.findIndex((a)=> a==card)}" ><p class="image hide"></p></article>
+                <style>
+                    #C${shuffledPack.findIndex((a)=> a==card)}>p{background-image: url("${card[0]}"); background-position-x: center;}
+                </style>
+            `)
+        }
+
+
+        // CALCULE DU NOMBRE DE COUPS ET DU TEMPS ACCORDÉ EN FONCTION DES VARIABLES CHOISIS EN INITIALISATION
+        function computeVariables(){  //choix des valeurs en début de partie => pour le nombre de coups accordés, temps accordés
+
+            allShots = Math.trunc(parseInt(selectionNumberCards.value) *(4/parseInt(selectionLevel.id)));
+            screenRemainingShots.textContent = allShots;
+            remainingShots = allShots;
+
+            allTime = Math.trunc(parseInt(selectionNumberCards.value)*5  *(1.5/parseInt(selectionLevel.id)));
+            remainingTime = allTime;
+
+        }
+
+
+
+        //
+        //
+        //AU COUR DE LA PARTIE
+        //
+        //
+
+        /*NOUVELLE PARTIE*/
+        document.querySelector("#button-new-game").addEventListener("click", newGame);
+
+        function newGame(){
+            score = 0;      //en cas de nouvelle partie on considère qu'on a perdu = score à 0
+            justLose()     //procédure d'initialisation classique
+        }
+
+        const screenTime = document.querySelector("#screen-remaining-time");
+
+
+        function clickCards(theCard){             //ce qui se passe quand on clique sur une carte
+
+            if (!onPlay){                   //si onPlay est désactivé, rien ne se passe.
+                console.log("ATTENDS, Rooooooooh")
+            }
+
+            if (onPlay){
+
+                document.querySelector("#"+theCard.id+">p").classList.remove("hide");  //on selectionne l'image (contenue dans le p) de la carte (#id), et on la montre
+                
+                if (theCard.classList.contains("unknown") && temporaryFlipCards.length <2){    //Si la carte est pas encore retournée et qu'il y a moins de 2 cartes retournées
+                    temporaryFlipCards.push([shuffledPack[parseInt(theCard.id.substr(1))], (theCard.id.substr(1))]);    //on push la carte (url + num (1 ou 2)) et son id, sous forme de liste
+                    theCard.classList.remove("unknown");     //la carte est retournée, elle est connue.
+
+                    remainingShots = remainingShots -1;
+                    screenRemainingShots.textContent = remainingShots;  //actualisation de l'affichage du nb de coups
+
+
+                    if (temporaryFlipCards.length==2){        //si 2 cartes retournées
+
+                        compareCards(temporaryFlipCards);
+
+                        screenFlipCards.textContent = numberFlipCards +" / "+selectionNumberCards.value;
+                    
+                        setTimeout(()=>{updateScore(), 500})
+                    }else{}
+                }
+
+                //A chaque fois qu'une nouvelle carte est retournée, on controle les victoire (si le joueur a gagné ou perdu)
+
+                if (numberFlipCards==selectionNumberCards.value){       //toutes les cartes retournées en mm temps = tout trouvé, donc gagné
+                    onPlay = false;                 //de toute façon il y a plus rien a jouer. on fait juste les choses proprement, ici
+                    justWon();                 //enclanchement de la fonction gagner()
+                    return                     //fin du controle (donc si on a tout trouvé, on gagne même si c'était le dernier coup)
+                }else{
+                    if (remainingShots<1){     //si plus de coups restants et qu'on a pas gagné
+                        justLose()      //juste après l'actualisation pour pas qu'il se fasse affecter par les timeout
+                    }
+                }       //contre intuitif de le mettre ici au lieu d'en dessous du calcule de remaining cards, mais ca assure que ça ne fonctionne que si la partie n'est pas déja gagnée
+
+            }
+        }
+        
+
+
+        // RETOURNER UNE CARTE
+        //
+
+        // COMPARAISON DE DEUX CARTES RETOURNEES
+        function compareCards(flipCardsCompared){   //CartesComparees = [[[URL image1, 1 ou 2], id1],[[URL image2, 1 ou 2], id2]]
+            onPlay = false;
+            let card1 = flipCardsCompared[0];        //création de variables locales pour simplifier la syntaxe
+            let card2 = flipCardsCompared[1];
+            if (card1[0][0] == card2[0][0]){      //si les URL sont identiques
+                let greenCards =[card1[1], card2[1]];    //récupération des deux indexs dans une liste
+                setTimeout(()=>{toBlink(greenCards, 4, ["green", "rgb(181, 106, 57)"])},250);
+                
+                temporaryFlipCards.splice(0,temporaryFlipCards.length); //fin de comparaison => il n'y a plus de cartes comparées
+                numberFlipCards = numberFlipCards+2;   //ajout de 2 au nb de cartes trouvées
+                score = score + valuePoint(spareTime, mistakes);     //ajout de points au score
+                spareTime=0;
+                mistakes = 0;
+            }
+
+            else{
+                mistakes = mistakes +1;          //une erreur a été commise
+                
+                document.querySelectorAll(".cards")[parseInt(card1[1])].classList.add("unknown");
+                document.querySelectorAll(".cards")[parseInt(card2[1])].classList.add("unknown");
+
+                let redCards =[card1[1], card2[1]];  //en réalité, le nom de cette variable n'est pas important comme elle est locale (disparaitra à la fin de la condition "else", 10 lignes plus loin)
+
+                setTimeout(()=>{toBlink(redCards, 8, ["red", "rgb(181, 106, 57)"])},250);
+
+                setTimeout(()=>{        //set time out pour ne pas que les cartes se re cachent pendant le clignotement
+                    document.querySelector("#C"+card1[1]+">p").classList.add("hide");
+                    document.querySelector("#C"+card2[1]+">p").classList.add("hide");
+                }, 2000);
+
+                temporaryFlipCards.splice(0,temporaryFlipCards.length) //fin de comparaison => il n'y a plus de cartes comparées
+                
+            }
+        }
+
+        //CLIGNOTTEMENT DES CARTES (EN ROUGE OU EN VERT) => ANIMATION
+        function toBlink(element, i, color){             //arguments : element à faire clignotter, i pour arreter la réccurence, color pour adapter le clignottement à la situation                   
+            if (i>0){       //nb de fois que ça va clignotter
+                let c=i%2;         //color est une liste [couleur pour clignottement, couleur originale]
+                    //i%2 = 0 ou 1, de manière alternative, une fois sur deux
+                element.forEach((i)=> {document.querySelector("#C"+i).style.backgroundColor=color[c]});
+                i=i-1;
+                setTimeout(()=>{toBlink(element, i, color)},250)      //i grandit à chaque tour de récurrence
+            }else{
+                onPlay = true; //on peut à nouveau retourner des cartes => on pouvait plus pendant le clignotement
+                return}       //fin de la récurrence quand i>7
+        }
+
+
+        //MISE A JOUR AFFICHAGE SCORE => ANIMATION
+        function updateScore(){     //fonction réccurcive qui actualise le score
+            if (screenScore.textContent<score){     //le chiffre augmente jusqu'à atteindre le vrai score
+                screenScore.textContent = parseInt(screenScore.textContent) + 1;
+                setTimeout(()=>{updateScore(), 80});        //vitesse à laquelle le chiffre augmente (80ms entre 2 valeurs)
+            }
+        }
+
+
+        //CALCULER LE NB DE POINTS A AJOUTER AU SCORE
+        function valuePoint(localTime, localMistake){
+            //ICI le calcule de la valeur des points => on la retourne
+            let points = 50;
+
+            //changement en fonction du niveau sélectionné (sauf niveau 1 => reste à 50)
+            //POINTS DE BASES => Niveau 1 : 50 ----- Niveau 2 : 61 ----- Niveau 3 : 73 ----- Niveau 4 : 100
+            if (parseInt(selectionLevel.id)==2){
+                points = Math.trunc(points*1.23)    //la valeur des points change en fonction du niveau de difficulté choisi (il affecte le temps, donc logique)
+            }
+            if (parseInt(selectionLevel.id)==3){
+                points = Math.trunc(points*1.46)
+            }
+            if (parseInt(selectionLevel.id)==4){
+                points = Math.trunc(points*2)     //si qqu gagne une partie légendaire, dur de battre le record sans une partie légendaire
+            }
+
+            //changement en fonction du temps mis pour jouer (quand le jeu est onPlay)
+            //Ne compte pas les temps de clignottement, évidement
+            // temps<=3sec : *2     3sec<temps<=9sec :*1.5      9sec<temps : *1
+
+            if (localTime <4){
+                points = Math.trunc(points*2)
+            }
+            if (3<localTime && localTime <10){
+                points = Math.trunc(points*1.5)
+            }
+
+
+            //changement en fonction du nombre d'erreurs => retourner 2 cartes différentes = 1 erreur
+            // 0 erreur = *1.5          1 erreur = *1.35        2 erreurs = 1.2         (on enlève 0.15 au multiple à chaque fois)
+
+            if(1.5-(0.15*localMistake)>0){
+                points = Math.trunc(points*(1.5-(0.15*localMistake)))
+            }
+
+            return(points)
+        }
+
+
+        // GAGNE !!!
+        function justWon(){
+            console.log("gagné !");
+            onPlay = false;
+
+            clearInterval(timer);
+
+            let allIndex = [];
+            for (i=0; i<shuffledPack.length;i=i+1){allIndex.push(i)}; //liste  de valeurs allant de 0 au nb de cartes utilisées
+            
+            setTimeout(()=>{allIndex.forEach((i)=>{                             //au bout de 2.5s, toutes les cartes sont vertes
+                document.querySelector("#C"+i).style.backgroundColor="green";
+                document.querySelector("#C"+i+">p").classList.remove("hide")    //en théorie inutile, en pratique peu être utile pour certaines MAJ
+                })},2000);          //2.5pour laisser le temps à l'animation clignottante de se terminer
+
+            endTitle="Félicitation !";
+            endParagraph="Tu as gagné cette partie ! Pense tu pouvoir faire un meilleur score ?";
+            
+            setTimeout(reBoot, 3000);
+        }
+
+        // PERDU !!!
+        function justLose(){
+            console.log("perdu !");
+            onPlay = false;
+
+            clearInterval(timer);
+
+            let allIndex = [];
+            for (i=0; i<shuffledPack.length;i=i+1){allIndex.push(i)} //liste  de valeurs allant de 0 au nb de cartes utilisées
+            
+            setTimeout(()=>{allIndex.forEach((i)=>{
+                document.querySelector("#C"+i).style.backgroundColor="red";
+                document.querySelector("#C"+i+">p").classList.remove("hide")
+                })},0);
+
+            endTitle="Dommage :/";
+            endParagraph="Tu as perdu cette partie... Essaie encore !";
+
+            score = 0;           //Pour ne pas risquer de faire un "meilleur score" alors qu'on a pas pu aller au bout de la partie
+
+            setTimeout(reBoot, 3000)
+
+        }
+
+
+
+
+        /*
+        EVOLUTION DU PROJET ET LES DIFFERENTES VERSIONS ENREGIRSTREES AU FUR ET A MESURE : https://github.com/CarZR/Jeu_Memory
+
+        JEU DISPONIBLE EN LIGNE A L'ADRESSE : 
+
+        MODALITES DU RENDU : https://www.valentindupas.com/courses/web/JS/user_stories/
+
+
+        Oui okay, les couleurs des cartes sont archi moches, mais j'avoue j'ai eu la flemme ;-;
+        Mise à part ça, tout fonctionne (normalement), j'ai fais plusieurs tests, avec plusieurs cas de figures différents (gagner, perdre, avec les différents niveaux, en aillant plus ou moins de coups restants, pareil pour le timing)
+        Je repasserai surement sur ce code dans les mois à venir pour rendre le rendus plus "jolie" et l'intégrer à mon portfolio (en tant que distraction, évidement)
+
+        
+        BONUS SUGGERE
+        - animation de distribution des cartes
+        https://aerotwist.com/blog/flip-your-animations/
+        https://css-tricks.com/animating-layouts-with-the-flip-technique/
+
+
+        AMELIORATIONS POSSIBLES
+        - voir les cartes qq instants au niveau facile
+        - couleurs
+        - police
+        - alignements
+        - cadrage des images (des cartes)
+        - taille des cartes
+        - design, de maniere générale
+        - réajuster les timer pour disposer de plus de temps
+        */
+
     </script>
 
 </body>
