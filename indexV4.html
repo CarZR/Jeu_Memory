@@ -312,11 +312,11 @@ p{margin:0rem}
 
             <section class="menu">    <!--il y avait aussi une classe menu, pour le css!!-->
                 
-                <h1 class=""id="congratulation">Nouveau meilleur score !</h1>
+                <h1 class="hide"id="congratulation">Nouveau meilleur score !</h1>
 
-                <article class="" id="end-game-message">                <!--AJOUTER LA CLASSE HIDE-->   <!--ATTENTION !!!!!!!-->
-                    <p id="end-game-title">AHAH</p>                             <!--ENLEVER LE TEXTE-->
-                    <p id="end-game-paragraph">tu as gagné/perdu ! LOLLLLLL</p> <!--enlever texte-->
+                <article class="hide" id="end-game-message">                
+                    <p id="end-game-title"></p>                            
+                    <p id="end-game-paragraph"></p> 
                 </article>
                 
                 <article class="hide" id="scores">
@@ -519,7 +519,7 @@ p{margin:0rem}
 
                     remainingShots = remainingShots -1;
                     screenRemainingShots.textContent = remainingShots;  //actualisation de l'affichage du nb de coups
-                    if (remainingShots<1){     //si plus de coups restants
+                    if (remainingShots<1 && (numberFlipCards<selectionNumberCards.value)){     //si plus de coups restants et qu'on a pas gagné
                         justLose()      //juste après l'actualisation pour pas qu'il se fasse affecter par les timeout
                     }
 
@@ -585,7 +585,6 @@ p{margin:0rem}
         }
 
         function reBoot(){
-
             document.querySelector(".overlay-menu").classList.remove("hide");       //on retourne au menu principal
             document.querySelector("#scores").classList.remove("hide");       //on retourne au menu principal
 
@@ -602,7 +601,7 @@ p{margin:0rem}
 
                 //inputName.value
             }else{
-                document.querySelector("#actual-score").textContent = "Score : " + score + "("+inputName.value+")";
+                document.querySelector("#actual-score").textContent = "Score : " + score + " ("+inputName.value+")";
                 document.querySelector("#congratulation").classList.add("hide");
             }
 
@@ -621,6 +620,8 @@ p{margin:0rem}
 
             numberFlipCards = 0;        //le nombre de cartes trouvées
             score = 0;
+
+            screenScore.textContent = 0
 
             newUserName = true;     //permet de valider la condition pour remettre le username à sa valeur par défault
             revortDefaultUserName()
